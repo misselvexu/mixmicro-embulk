@@ -20,7 +20,6 @@ import org.msgpack.value.impl.ImmutableBigIntegerValueImpl;
 import org.msgpack.value.impl.ImmutableBinaryValueImpl;
 import org.msgpack.value.impl.ImmutableBooleanValueImpl;
 import org.msgpack.value.impl.ImmutableDoubleValueImpl;
-import org.msgpack.value.impl.ImmutableExtensionValueImpl;
 import org.msgpack.value.impl.ImmutableLongValueImpl;
 import org.msgpack.value.impl.ImmutableMapValueImpl;
 import org.msgpack.value.impl.ImmutableNilValueImpl;
@@ -289,10 +288,5 @@ public final class ValueFactory
             }
             return this;
         }
-    }
-
-    public static ImmutableExtensionValue newExtension(byte type, byte[] data)
-    {
-        return new ImmutableExtensionValueImpl(type, data);
     }
 }

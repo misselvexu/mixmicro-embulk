@@ -32,7 +32,7 @@ public enum ValueType
     BINARY(false, true),
     ARRAY(false, false),
     MAP(false, false),
-    EXTENSION(false, false);
+    ;
 
     private final boolean numberType;
     private final boolean rawType;
@@ -91,10 +91,5 @@ public enum ValueType
     public boolean isMapType()
     {
         return this == MAP;
-    }
-
-    public boolean isExtensionType()
-    {
-        return this == EXTENSION;
     }
 }

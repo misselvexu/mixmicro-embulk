@@ -19,7 +19,6 @@ import org.msgpack.core.MessageTypeCastException;
 import org.msgpack.value.ImmutableArrayValue;
 import org.msgpack.value.ImmutableBinaryValue;
 import org.msgpack.value.ImmutableBooleanValue;
-import org.msgpack.value.ImmutableExtensionValue;
 import org.msgpack.value.ImmutableFloatValue;
 import org.msgpack.value.ImmutableIntegerValue;
 import org.msgpack.value.ImmutableMapValue;
@@ -93,12 +92,6 @@ abstract class AbstractImmutableValue
     }
 
     @Override
-    public boolean isExtensionValue()
-    {
-        return getValueType().isExtensionType();
-    }
-
-    @Override
     public ImmutableNilValue asNilValue()
     {
         throw new MessageTypeCastException();
@@ -154,12 +147,6 @@ abstract class AbstractImmutableValue
 
     @Override
     public ImmutableMapValue asMapValue()
-    {
-        throw new MessageTypeCastException();
-    }
-
-    @Override
-    public ImmutableExtensionValue asExtensionValue()
     {
         throw new MessageTypeCastException();
     }

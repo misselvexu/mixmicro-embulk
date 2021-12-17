@@ -36,7 +36,7 @@ package org.msgpack.value;
  *   <tr><td>Binary</td><td>{@link #isBinaryValue()}</td><td>{@link #asBinaryValue()}</td><td>{@link BinaryValue}</td></tr>
  *   <tr><td>Array</td><td>{@link #isArrayValue()}</td><td>{@link #asArrayValue()}</td><td>{@link ArrayValue}</td></tr>
  *   <tr><td>Map</td><td>{@link #isMapValue()}</td><td>{@link #asMapValue()}</td><td>{@link MapValue}</td></tr>
- *   <tr><td>Extension</td><td>{@link #isExtensionValue()}</td><td>{@link #asExtensionValue()}</td><td>{@link ExtensionValue}</td></tr>
+tr>
  * </table>
  *
  * <h2>Immutable interface</h2>
@@ -60,7 +60,6 @@ package org.msgpack.value;
  *   <tr><td>Binary</td><td>{@link BinaryValue}.{@link BinaryValue#immutableValue()}</td><td>{@link ImmutableBinaryValue}</td></tr>
  *   <tr><td>Array</td><td>{@link ArrayValue}.{@link ArrayValue#immutableValue()}</td><td>{@link ImmutableArrayValue}</td></tr>
  *   <tr><td>Map</td><td>{@link MapValue}.{@link MapValue#immutableValue()}</td><td>{@link ImmutableMapValue}</td></tr>
- *   <tr><td>Extension</td><td>{@link ExtensionValue}.{@link ExtensionValue#immutableValue()}</td><td>{@link ImmutableExtensionValue}</td></tr>
  * </table>
  *
  * <h2>Converting to JSON</h2>
@@ -68,8 +67,7 @@ package org.msgpack.value;
  * {@link #toJson()} method returns JSON representation of a Value. See its documents for details.
  * <p>
  * toString() also returns a string representation of a Value that is similar to JSON. However, unlike toJson() method,
- * toString() may return a special format that is not be compatible with JSON when JSON doesn't support the type such
- * as ExtensionValue.
+ * toString() may return a special format that is not be compatible with JSON when JSON doesn't support the type.
  */
 public interface Value
 {
@@ -168,15 +166,6 @@ public interface Value
     boolean isMapValue();
 
     /**
-     * Returns true if type of this an Extension.
-     *
-     * If this method returns true, {@code asExtensionValue} never throws exceptions.
-     * Note that you can't use <code>instanceof</code> or cast <code>((ExtensionValue) thisValue)</code> to check type of a value because
-     * type of a mutable value is variable.
-     */
-    boolean isExtensionValue();
-
-    /**
      * Returns the value as {@code NilValue}. Otherwise throws {@code MessageTypeCastException}.
      *
      * Note that you can't use <code>instanceof</code> or cast <code>((NilValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
@@ -267,16 +256,6 @@ public interface Value
     MapValue asMapValue();
 
     /**
-     * Returns the value as {@code ExtensionValue}. Otherwise throws {@code MessageTypeCastException}.
-     *
-     * Note that you can't use <code>instanceof</code> or cast <code>((ExtensionValue) thisValue)</code> to check type of a value
-     * because type of a mutable value is variable.
-     *
-     * @throws MessageTypeCastException If type of this value is not an Extension.
-     */
-    ExtensionValue asExtensionValue();
-
-    /**
      * Compares this value to the specified object.
      *
      * This method returns {@code true} if type and value are equivalent.
@@ -292,7 +271,6 @@ public interface Value
      * <ul>
      * <li>if a key of MapValue is not string, the key is converted to a string using toString method.</li>
      * <li>NaN and Infinity of DoubleValue are converted to null.</li>
-     * <li>ExtensionValue is converted to a 2-element array where first element is a number and second element is the data encoded in hex.</li>
      * <li>BinaryValue is converted to a string using UTF-8 encoding. Invalid byte sequence is replaced with <code>U+FFFD replacement character</code>.</li>
      * <li>Invalid UTF-8 byte sequences in StringValue is replaced with <code>U+FFFD replacement character</code></li>
      * <ul>
