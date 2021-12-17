@@ -15,13 +15,11 @@
 //
 package org.msgpack.value;
 
-import org.msgpack.value.impl.ImmutableArrayValueImpl;
 import org.msgpack.value.impl.ImmutableBigIntegerValueImpl;
 import org.msgpack.value.impl.ImmutableBooleanValueImpl;
 import org.msgpack.value.impl.ImmutableDoubleValueImpl;
 import org.msgpack.value.impl.ImmutableLongValueImpl;
 import org.msgpack.value.impl.ImmutableMapValueImpl;
-import org.msgpack.value.impl.ImmutableNilValueImpl;
 import org.msgpack.value.impl.ImmutableStringValueImpl;
 
 import java.math.BigInteger;
@@ -39,7 +37,7 @@ public final class ValueFactory
 
     public static NilValue newNil()
     {
-        return ImmutableNilValueImpl.get();
+        return NilValue.get();
     }
 
     public static BooleanValue newBoolean(boolean v)
@@ -90,38 +88,38 @@ public final class ValueFactory
     public static ArrayValue newArray(List<? extends Value> list)
     {
         if (list.isEmpty()) {
-            return ImmutableArrayValueImpl.empty();
+            return ArrayValue.empty();
         }
         Value[] array = list.toArray(new Value[list.size()]);
-        return new ImmutableArrayValueImpl(array);
+        return new ArrayValue(array);
     }
 
     public static ArrayValue newArray(Value... array)
     {
         if (array.length == 0) {
-            return ImmutableArrayValueImpl.empty();
+            return ArrayValue.empty();
         }
         else {
-            return new ImmutableArrayValueImpl(Arrays.copyOf(array, array.length));
+            return new ArrayValue(Arrays.copyOf(array, array.length));
         }
     }
 
     public static ArrayValue newArray(Value[] array, boolean omitCopy)
     {
         if (array.length == 0) {
-            return ImmutableArrayValueImpl.empty();
+            return ArrayValue.empty();
         }
         else if (omitCopy) {
-            return new ImmutableArrayValueImpl(array);
+            return new ArrayValue(array);
         }
         else {
-            return new ImmutableArrayValueImpl(Arrays.copyOf(array, array.length));
+            return new ArrayValue(Arrays.copyOf(array, array.length));
         }
     }
 
     public static ArrayValue emptyArray()
     {
-        return ImmutableArrayValueImpl.empty();
+        return ArrayValue.empty();
     }
 
     public static <K extends Value, V extends Value>

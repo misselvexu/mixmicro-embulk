@@ -18,7 +18,59 @@ package org.msgpack.value;
 /**
  * Representation of MessagePack's Nil type.
  */
-public interface NilValue
-        extends Value
+public final class NilValue
+        implements Value
 {
+    private static NilValue instance = new NilValue();
+
+    public static NilValue get()
+    {
+        return instance;
+    }
+
+    private NilValue()
+    {
+    }
+
+    @Override
+    public ValueType getValueType()
+    {
+        return ValueType.NIL;
+    }
+
+    @Override
+    public NilValue asNilValue()
+    {
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Value)) {
+            return false;
+        }
+        return ((Value) o).isNilValue();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return 0;
+    }
+
+    @Override
+    public String toString()
+    {
+        return toJson();
+    }
+
+    @Override
+    public String toJson()
+    {
+        return "null";
+    }
 }
