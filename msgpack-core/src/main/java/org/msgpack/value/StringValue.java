@@ -15,21 +15,146 @@
 //
 package org.msgpack.value;
 
+import java.util.Objects;
+
 /**
  * Representation of MessagePack's String type.
  *
  * MessagePack's String type can represent a UTF-8 string at most 2<sup>64</sup>-1 bytes.
  */
-public interface StringValue
-        extends Value
+public final class StringValue
+        implements Value
 {
-    /**
-     * Returns the value as {@code String}.
-     */
-    String asString();
+    private final String string;
+
+    public StringValue(String string)
+    {
+        this.string = string;
+    }
+
+    @Override
+    public ValueType getValueType()
+    {
+        return ValueType.STRING;
+    }
+
+    @Override
+    public StringValue asStringValue()
+    {
+        return this;
+    }
 
     /**
      * Returns the value as {@code String}.
      */
-    String toString();
+    public String asString()
+    {
+        return string;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Value)) {
+            return false;
+        }
+        Value v = (Value) o;
+        if (!v.isStringValue()) {
+            return false;
+        }
+
+        if (v instanceof StringValue) {
+            StringValue bv = (StringValue) v;
+            return Objects.equals(string, bv.string);
+        }
+        else {
+            return Objects.equals(string, v.asStringValue().asString());
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(string);
+    }
+
+    @Override
+    public String toJson()
+    {
+        StringBuilder sb = new StringBuilder();
+        appendJsonString(sb, toString());
+        return sb.toString();
+    }
+
+    @Override
+    public String toString()
+    {
+        return string;
+    }
+
+    static void appendJsonString(StringBuilder sb, String string)
+    {
+        sb.append("\"");
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
+            if (ch < 0x20) {
+                switch (ch) {
+                    case '\n':
+                        sb.append("\\n");
+                        break;
+                    case '\r':
+                        sb.append("\\r");
+                        break;
+                    case '\t':
+                        sb.append("\\t");
+                        break;
+                    case '\f':
+                        sb.append("\\f");
+                        break;
+                    case '\b':
+                        sb.append("\\b");
+                        break;
+                    default:
+                        // control chars
+                        escapeChar(sb, ch);
+                        break;
+                }
+            }
+            else if (ch <= 0x7f) {
+                switch (ch) {
+                    case '\\':
+                        sb.append("\\\\");
+                        break;
+                    case '"':
+                        sb.append("\\\"");
+                        break;
+                    default:
+                        sb.append(ch);
+                        break;
+                }
+            }
+            else if (ch >= 0xd800 && ch <= 0xdfff) {
+                // surrogates
+                escapeChar(sb, ch);
+            }
+            else {
+                sb.append(ch);
+            }
+        }
+        sb.append("\"");
+    }
+
+    private static final char[] HEX_TABLE = "0123456789ABCDEF".toCharArray();
+
+    private static void escapeChar(StringBuilder sb, int ch)
+    {
+        sb.append("\\u");
+        sb.append(HEX_TABLE[(ch >> 12) & 0x0f]);
+        sb.append(HEX_TABLE[(ch >> 8) & 0x0f]);
+        sb.append(HEX_TABLE[(ch >> 4) & 0x0f]);
+        sb.append(HEX_TABLE[ch & 0x0f]);
+    }
 }

@@ -19,8 +19,6 @@ import org.msgpack.value.impl.ImmutableBigIntegerValueImpl;
 import org.msgpack.value.impl.ImmutableBooleanValueImpl;
 import org.msgpack.value.impl.ImmutableDoubleValueImpl;
 import org.msgpack.value.impl.ImmutableLongValueImpl;
-import org.msgpack.value.impl.ImmutableMapValueImpl;
-import org.msgpack.value.impl.ImmutableStringValueImpl;
 
 import java.math.BigInteger;
 import java.util.AbstractMap;
@@ -82,7 +80,7 @@ public final class ValueFactory
 
     public static StringValue newString(String s)
     {
-        return new ImmutableStringValueImpl(s);
+        return new StringValue(s);
     }
 
     public static ArrayValue newArray(List<? extends Value> list)
@@ -133,35 +131,35 @@ public final class ValueFactory
             kvs[index] = pair.getValue();
             index++;
         }
-        return new ImmutableMapValueImpl(kvs);
+        return new MapValue(kvs);
     }
 
     public static MapValue newMap(Value... kvs)
     {
         if (kvs.length == 0) {
-            return ImmutableMapValueImpl.empty();
+            return MapValue.empty();
         }
         else {
-            return new ImmutableMapValueImpl(Arrays.copyOf(kvs, kvs.length));
+            return new MapValue(Arrays.copyOf(kvs, kvs.length));
         }
     }
 
     public static MapValue newMap(Value[] kvs, boolean omitCopy)
     {
         if (kvs.length == 0) {
-            return ImmutableMapValueImpl.empty();
+            return MapValue.empty();
         }
         else if (omitCopy) {
-            return new ImmutableMapValueImpl(kvs);
+            return new MapValue(kvs);
         }
         else {
-            return new ImmutableMapValueImpl(Arrays.copyOf(kvs, kvs.length));
+            return new MapValue(Arrays.copyOf(kvs, kvs.length));
         }
     }
 
     public static MapValue emptyMap()
     {
-        return ImmutableMapValueImpl.empty();
+        return MapValue.empty();
     }
 
     @SafeVarargs
