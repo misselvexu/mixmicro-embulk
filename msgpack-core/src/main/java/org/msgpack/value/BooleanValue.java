@@ -19,12 +19,79 @@ package org.msgpack.value;
  * Representation MessagePack's Boolean type.
  *
  * MessagePack's Boolean type can represent {@code true} or {@code false}.
+ *
+ * This class is a singleton. {@code BooleanValue.trueInstance()} and {@code BooleanValue.falseInstance()} are the only instances of this class.
  */
-public interface BooleanValue
-        extends Value
+public final class BooleanValue
+        implements Value
 {
+    public static final BooleanValue TRUE = new BooleanValue(true);
+    public static final BooleanValue FALSE = new BooleanValue(false);
+
+    private final boolean value;
+
+    private BooleanValue(boolean value)
+    {
+        this.value = value;
+    }
+
+    @Override
+    public ValueType getValueType()
+    {
+        return ValueType.BOOLEAN;
+    }
+
+    @Override
+    public BooleanValue asBooleanValue()
+    {
+        return this;
+    }
+
     /**
      * Returns the value as a {@code boolean}.
      */
-    boolean getBoolean();
+    public boolean getBoolean()
+    {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Value)) {
+            return false;
+        }
+        Value v = (Value) o;
+
+        if (!v.isBooleanValue()) {
+            return false;
+        }
+        return value == v.asBooleanValue().getBoolean();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        if (value) {
+            return 1231;
+        }
+        else {
+            return 1237;
+        }
+    }
+
+    @Override
+    public String toJson()
+    {
+        return Boolean.toString(value);
+    }
+
+    @Override
+    public String toString()
+    {
+        return toJson();
+    }
 }

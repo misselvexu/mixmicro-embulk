@@ -16,7 +16,6 @@
 package org.msgpack.value;
 
 import org.msgpack.value.impl.ImmutableBigIntegerValueImpl;
-import org.msgpack.value.impl.ImmutableBooleanValueImpl;
 import org.msgpack.value.impl.ImmutableDoubleValueImpl;
 import org.msgpack.value.impl.ImmutableLongValueImpl;
 
@@ -40,7 +39,7 @@ public final class ValueFactory
 
     public static BooleanValue newBoolean(boolean v)
     {
-        return v ? ImmutableBooleanValueImpl.TRUE : ImmutableBooleanValueImpl.FALSE;
+        return v ? BooleanValue.TRUE : BooleanValue.FALSE;
     }
 
     public static IntegerValue newInteger(byte v)
