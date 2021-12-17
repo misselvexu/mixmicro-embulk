@@ -15,7 +15,6 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.value.ImmutableMapValue;
 import org.msgpack.value.MapValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
@@ -31,17 +30,16 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * {@code ImmutableMapValueImpl} Implements {@code ImmutableMapValue} using a {@code Value[]} field.
+ * {@code ImmutableMapValueImpl} Implements {@code MapValue} using a {@code Value[]} field.
  *
  * @see org.msgpack.value.MapValue
  */
 public class ImmutableMapValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableMapValue
+        implements MapValue
 {
     private static final ImmutableMapValueImpl EMPTY = new ImmutableMapValueImpl(new Value[0]);
 
-    public static ImmutableMapValue empty()
+    public static MapValue empty()
     {
         return EMPTY;
     }
@@ -60,13 +58,7 @@ public class ImmutableMapValueImpl
     }
 
     @Override
-    public ImmutableMapValue immutableValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableMapValue asMapValue()
+    public MapValue asMapValue()
     {
         return this;
     }

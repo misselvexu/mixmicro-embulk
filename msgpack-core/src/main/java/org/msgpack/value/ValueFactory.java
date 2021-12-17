@@ -37,57 +37,57 @@ public final class ValueFactory
     {
     }
 
-    public static ImmutableNilValue newNil()
+    public static NilValue newNil()
     {
         return ImmutableNilValueImpl.get();
     }
 
-    public static ImmutableBooleanValue newBoolean(boolean v)
+    public static BooleanValue newBoolean(boolean v)
     {
         return v ? ImmutableBooleanValueImpl.TRUE : ImmutableBooleanValueImpl.FALSE;
     }
 
-    public static ImmutableIntegerValue newInteger(byte v)
+    public static IntegerValue newInteger(byte v)
     {
         return new ImmutableLongValueImpl(v);
     }
 
-    public static ImmutableIntegerValue newInteger(short v)
+    public static IntegerValue newInteger(short v)
     {
         return new ImmutableLongValueImpl(v);
     }
 
-    public static ImmutableIntegerValue newInteger(int v)
+    public static IntegerValue newInteger(int v)
     {
         return new ImmutableLongValueImpl(v);
     }
 
-    public static ImmutableIntegerValue newInteger(long v)
+    public static IntegerValue newInteger(long v)
     {
         return new ImmutableLongValueImpl(v);
     }
 
-    public static ImmutableIntegerValue newInteger(BigInteger v)
+    public static IntegerValue newInteger(BigInteger v)
     {
         return new ImmutableBigIntegerValueImpl(v);
     }
 
-    public static ImmutableFloatValue newFloat(float v)
+    public static FloatValue newFloat(float v)
     {
         return new ImmutableDoubleValueImpl(v);
     }
 
-    public static ImmutableFloatValue newFloat(double v)
+    public static FloatValue newFloat(double v)
     {
         return new ImmutableDoubleValueImpl(v);
     }
 
-    public static ImmutableStringValue newString(String s)
+    public static StringValue newString(String s)
     {
         return new ImmutableStringValueImpl(s);
     }
 
-    public static ImmutableArrayValue newArray(List<? extends Value> list)
+    public static ArrayValue newArray(List<? extends Value> list)
     {
         if (list.isEmpty()) {
             return ImmutableArrayValueImpl.empty();
@@ -96,7 +96,7 @@ public final class ValueFactory
         return new ImmutableArrayValueImpl(array);
     }
 
-    public static ImmutableArrayValue newArray(Value... array)
+    public static ArrayValue newArray(Value... array)
     {
         if (array.length == 0) {
             return ImmutableArrayValueImpl.empty();
@@ -106,7 +106,7 @@ public final class ValueFactory
         }
     }
 
-    public static ImmutableArrayValue newArray(Value[] array, boolean omitCopy)
+    public static ArrayValue newArray(Value[] array, boolean omitCopy)
     {
         if (array.length == 0) {
             return ImmutableArrayValueImpl.empty();
@@ -119,13 +119,13 @@ public final class ValueFactory
         }
     }
 
-    public static ImmutableArrayValue emptyArray()
+    public static ArrayValue emptyArray()
     {
         return ImmutableArrayValueImpl.empty();
     }
 
     public static <K extends Value, V extends Value>
-    ImmutableMapValue newMap(Map<K, V> map)
+    MapValue newMap(Map<K, V> map)
     {
         Value[] kvs = new Value[map.size() * 2];
         int index = 0;
@@ -138,7 +138,7 @@ public final class ValueFactory
         return new ImmutableMapValueImpl(kvs);
     }
 
-    public static ImmutableMapValue newMap(Value... kvs)
+    public static MapValue newMap(Value... kvs)
     {
         if (kvs.length == 0) {
             return ImmutableMapValueImpl.empty();
@@ -148,7 +148,7 @@ public final class ValueFactory
         }
     }
 
-    public static ImmutableMapValue newMap(Value[] kvs, boolean omitCopy)
+    public static MapValue newMap(Value[] kvs, boolean omitCopy)
     {
         if (kvs.length == 0) {
             return ImmutableMapValueImpl.empty();
@@ -161,7 +161,7 @@ public final class ValueFactory
         }
     }
 
-    public static ImmutableMapValue emptyMap()
+    public static MapValue emptyMap()
     {
         return ImmutableMapValueImpl.empty();
     }

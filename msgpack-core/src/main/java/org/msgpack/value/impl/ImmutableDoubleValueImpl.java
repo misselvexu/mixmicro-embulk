@@ -15,8 +15,8 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.value.ImmutableNumberValue;
-import org.msgpack.value.ImmutableFloatValue;
+import org.msgpack.value.FloatValue;
+import org.msgpack.value.NumberValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
@@ -24,13 +24,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * {@code ImmutableDoubleValueImpl} Implements {@code ImmutableFloatValue} using a {@code double} field.
+ * {@code ImmutableDoubleValueImpl} Implements {@code FloatValue} using a {@code double} field.
  *
  * @see org.msgpack.value.FloatValue
  */
 public class ImmutableDoubleValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableFloatValue
+        implements FloatValue
 {
     private final double value;
 
@@ -46,19 +45,13 @@ public class ImmutableDoubleValueImpl
     }
 
     @Override
-    public ImmutableDoubleValueImpl immutableValue()
+    public NumberValue asNumberValue()
     {
         return this;
     }
 
     @Override
-    public ImmutableNumberValue asNumberValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableFloatValue asFloatValue()
+    public FloatValue asFloatValue()
     {
         return this;
     }

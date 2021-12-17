@@ -15,23 +15,22 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.value.ImmutableBooleanValue;
+import org.msgpack.value.BooleanValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
 /**
- * {@code ImmutableBooleanValueImpl} Implements {@code ImmutableBooleanValue} using a {@code boolean} field.
+ * {@code ImmutableBooleanValueImpl} Implements {@code BooleanValue} using a {@code boolean} field.
  *
  * This class is a singleton. {@code ImmutableBooleanValueImpl.trueInstance()} and {@code ImmutableBooleanValueImpl.falseInstance()} are the only instances of this class.
  *
  * @see org.msgpack.value.BooleanValue
  */
 public class ImmutableBooleanValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableBooleanValue
+        implements BooleanValue
 {
-    public static final ImmutableBooleanValue TRUE = new ImmutableBooleanValueImpl(true);
-    public static final ImmutableBooleanValue FALSE = new ImmutableBooleanValueImpl(false);
+    public static final BooleanValue TRUE = new ImmutableBooleanValueImpl(true);
+    public static final BooleanValue FALSE = new ImmutableBooleanValueImpl(false);
 
     private final boolean value;
 
@@ -47,13 +46,7 @@ public class ImmutableBooleanValueImpl
     }
 
     @Override
-    public ImmutableBooleanValue asBooleanValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableBooleanValue immutableValue()
+    public BooleanValue asBooleanValue()
     {
         return this;
     }

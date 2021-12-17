@@ -15,6 +15,8 @@
 //
 package org.msgpack.value;
 
+import org.msgpack.core.MessageTypeCastException;
+
 /**
  * Value stores a value and its type in MessagePack type system.
  *
@@ -37,27 +39,6 @@ package org.msgpack.value;
 tr>
  * </table>
  *
- * <h2>Immutable interface</h2>
- * <p>
- * Value interface is the base interface of all Value interfaces. Immutable subtypes are useful so that you can
- * declare that a (final) field or elements of a container object are immutable. Method arguments should be a
- * regular Value interface generally.
- * <p>
- * You can use {@link #immutableValue()} method to get immutable subtypes.
- *
- * <table>
- *   <tr><th>MessagePack type</th><th>Subtype method</th><th>Immutable value type</th></tr>
- *   <tr><td>any types</td><td>{@link Value}.{@link Value#immutableValue()}</td><td>{@link ImmutableValue}</td></tr>
- *   <tr><td>Nil</td><td>{@link NilValue}.{@link NilValue#immutableValue()}</td><td>{@link ImmutableNilValue}</td></tr>
- *   <tr><td>Boolean</td><td>{@link BooleanValue}.{@link BooleanValue#immutableValue()}</td><td>{@link ImmutableBooleanValue}</td></tr>
- *   <tr><td>Integer</td><td>{@link IntegerValue}.{@link IntegerValue#immutableValue()}</td><td>{@link ImmutableIntegerValue}</td></tr>
- *   <tr><td>Float</td><td>{@link FloatValue}.{@link FloatValue#immutableValue()}</td><td>{@link ImmutableFloatValue}</td></tr>
- *   <tr><td>Integer or Float</td><td>{@link NumberValue}.{@link NumberValue#immutableValue()}</td><td>{@link ImmutableNumberValue}</td></tr>
- *   <tr><td>String</td><td>{@link StringValue}.{@link StringValue#immutableValue()}</td><td>{@link ImmutableStringValue}</td></tr>
- *   <tr><td>Array</td><td>{@link ArrayValue}.{@link ArrayValue#immutableValue()}</td><td>{@link ImmutableArrayValue}</td></tr>
- *   <tr><td>Map</td><td>{@link MapValue}.{@link MapValue#immutableValue()}</td><td>{@link ImmutableMapValue}</td></tr>
- * </table>
- *
  * <h2>Converting to JSON</h2>
  * <p>
  * {@link #toJson()} method returns JSON representation of a Value. See its documents for details.
@@ -75,19 +56,15 @@ public interface Value
     ValueType getValueType();
 
     /**
-     * Returns immutable copy of this value.
-     *
-     * This method simply returns <code>this</code> without copying the value if this value is already immutable.
-     */
-    ImmutableValue immutableValue();
-
-    /**
      * Returns true if type of this value is Nil.
      *
      * If this method returns true, {@code asNilValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((NilValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isNilValue();
+    default boolean isNilValue()
+    {
+        return getValueType().isNilType();
+    }
 
     /**
      * Returns true if type of this value is Boolean.
@@ -95,7 +72,10 @@ public interface Value
      * If this method returns true, {@code asBooleanValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((BooleanValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isBooleanValue();
+    default boolean isBooleanValue()
+    {
+        return getValueType().isBooleanType();
+    }
 
     /**
      * Returns true if type of this value is Integer or Float.
@@ -103,7 +83,10 @@ public interface Value
      * If this method returns true, {@code asNumberValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((NumberValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isNumberValue();
+    default boolean isNumberValue()
+    {
+        return getValueType().isNumberType();
+    }
 
     /**
      * Returns true if type of this value is Integer.
@@ -111,7 +94,10 @@ public interface Value
      * If this method returns true, {@code asIntegerValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((IntegerValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isIntegerValue();
+    default boolean isIntegerValue()
+    {
+        return getValueType().isIntegerType();
+    }
 
     /**
      * Returns true if type of this value is Float.
@@ -119,7 +105,10 @@ public interface Value
      * If this method returns true, {@code asFloatValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((FloatValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isFloatValue();
+    default boolean isFloatValue()
+    {
+        return getValueType().isFloatType();
+    }
 
     /**
      * Returns true if type of this value is String.
@@ -127,7 +116,10 @@ public interface Value
      * If this method returns true, {@code asStringValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((StringValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isStringValue();
+    default boolean isStringValue()
+    {
+        return getValueType().isStringType();
+    }
 
     /**
      * Returns true if type of this value is Array.
@@ -135,7 +127,10 @@ public interface Value
      * If this method returns true, {@code asArrayValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((ArrayValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isArrayValue();
+    default boolean isArrayValue()
+    {
+        return getValueType().isArrayType();
+    }
 
     /**
      * Returns true if type of this value is Map.
@@ -143,7 +138,10 @@ public interface Value
      * If this method returns true, {@code asMapValue} never throws exceptions.
      * Note that you can't use <code>instanceof</code> or cast <code>((MapValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
-    boolean isMapValue();
+    default boolean isMapValue()
+    {
+        return getValueType().isMapType();
+    }
 
     /**
      * Returns the value as {@code NilValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -152,7 +150,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Nil.
      */
-    NilValue asNilValue();
+    default NilValue asNilValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code BooleanValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -161,7 +162,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Boolean.
      */
-    BooleanValue asBooleanValue();
+    default BooleanValue asBooleanValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code NumberValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -170,7 +174,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Integer or Float.
      */
-    NumberValue asNumberValue();
+    default NumberValue asNumberValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code IntegerValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -179,7 +186,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Integer.
      */
-    IntegerValue asIntegerValue();
+    default IntegerValue asIntegerValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code FloatValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -188,7 +198,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Float.
      */
-    FloatValue asFloatValue();
+    default FloatValue asFloatValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code StringValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -197,7 +210,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not String.
      */
-    StringValue asStringValue();
+    default StringValue asStringValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code ArrayValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -206,7 +222,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Array.
      */
-    ArrayValue asArrayValue();
+    default ArrayValue asArrayValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Returns the value as {@code MapValue}. Otherwise throws {@code MessageTypeCastException}.
@@ -215,7 +234,10 @@ public interface Value
      *
      * @throws MessageTypeCastException If type of this value is not Map.
      */
-    MapValue asMapValue();
+    default MapValue asMapValue()
+    {
+        throw new MessageTypeCastException();
+    }
 
     /**
      * Compares this value to the specified object.

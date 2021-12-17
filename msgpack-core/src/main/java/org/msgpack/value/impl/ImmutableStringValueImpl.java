@@ -15,20 +15,19 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.value.ImmutableStringValue;
+import org.msgpack.value.StringValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
 import java.util.Objects;
 
 /**
- * {@code ImmutableStringValueImpl} Implements {@code ImmutableStringValue} using a {@code String} field.
+ * {@code ImmutableStringValueImpl} Implements {@code StringValue} using a {@code String} field.
  *
  * @see org.msgpack.value.StringValue
  */
 public class ImmutableStringValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableStringValue
+        implements StringValue
 {
     private final String string;
 
@@ -44,13 +43,7 @@ public class ImmutableStringValueImpl
     }
 
     @Override
-    public ImmutableStringValue immutableValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableStringValue asStringValue()
+    public StringValue asStringValue()
     {
         return this;
     }

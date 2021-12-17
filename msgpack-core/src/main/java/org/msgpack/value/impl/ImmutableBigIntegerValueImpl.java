@@ -16,22 +16,20 @@
 package org.msgpack.value.impl;
 
 import org.msgpack.core.MessageIntegerOverflowException;
-import org.msgpack.value.ImmutableIntegerValue;
-import org.msgpack.value.ImmutableNumberValue;
 import org.msgpack.value.IntegerValue;
+import org.msgpack.value.NumberValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
 import java.math.BigInteger;
 
 /**
- * {@code ImmutableBigIntegerValueImpl} Implements {@code ImmutableBigIntegerValue} using a {@code BigInteger} field.
+ * {@code ImmutableBigIntegerValueImpl} Implements {@code IntegerValue} using a {@code BigInteger} field.
  *
  * @see org.msgpack.value.IntegerValue
  */
 public class ImmutableBigIntegerValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableIntegerValue
+        implements IntegerValue
 {
     private final BigInteger value;
 
@@ -56,19 +54,13 @@ public class ImmutableBigIntegerValueImpl
     }
 
     @Override
-    public ImmutableIntegerValue immutableValue()
+    public NumberValue asNumberValue()
     {
         return this;
     }
 
     @Override
-    public ImmutableNumberValue asNumberValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableIntegerValue asIntegerValue()
+    public IntegerValue asIntegerValue()
     {
         return this;
     }

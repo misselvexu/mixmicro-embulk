@@ -47,11 +47,13 @@ public interface ArrayValue
 
     /**
      * Returns an iterator over elements.
+     * Returned Iterator does not support {@code remove()} method since the value is immutable.
      */
     Iterator<Value> iterator();
 
     /**
      * Returns the value as {@code List}.
+     * Returned List is immutable. It does not support {@code put()}, {@code clear()}, or other methods that modify the value.
      */
     List<Value> list();
 }

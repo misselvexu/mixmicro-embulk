@@ -16,7 +16,6 @@
 package org.msgpack.value.impl;
 
 import org.msgpack.value.ArrayValue;
-import org.msgpack.value.ImmutableArrayValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
@@ -27,17 +26,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * {@code ImmutableArrayValueImpl} Implements {@code ImmutableArrayValue} using a {@code Value[]} field.
+ * {@code ImmutableArrayValueImpl} Implements {@code ArrayValue} using a {@code Value[]} field.
  *
  * @see org.msgpack.value.IntegerValue
  */
 public class ImmutableArrayValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableArrayValue
+        implements ArrayValue
 {
     private static final ImmutableArrayValueImpl EMPTY = new ImmutableArrayValueImpl(new Value[0]);
 
-    public static ImmutableArrayValue empty()
+    public static ArrayValue empty()
     {
         return EMPTY;
     }
@@ -56,13 +54,7 @@ public class ImmutableArrayValueImpl
     }
 
     @Override
-    public ImmutableArrayValue immutableValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableArrayValue asArrayValue()
+    public ArrayValue asArrayValue()
     {
         return this;
     }

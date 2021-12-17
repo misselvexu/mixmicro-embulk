@@ -15,24 +15,23 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.value.ImmutableNilValue;
+import org.msgpack.value.NilValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
 /**
- * {@code ImmutableNilValueImpl} Implements {@code ImmutableNilValue}.
+ * {@code ImmutableNilValueImpl} Implements {@code NilValue}.
  *
  * This class is a singleton. {@code ImmutableNilValueImpl.get()} is the only instances of this class.
  *
  * @see org.msgpack.value.NilValue
  */
 public class ImmutableNilValueImpl
-        extends AbstractImmutableValue
-        implements ImmutableNilValue
+        implements NilValue
 {
-    private static ImmutableNilValue instance = new ImmutableNilValueImpl();
+    private static NilValue instance = new ImmutableNilValueImpl();
 
-    public static ImmutableNilValue get()
+    public static NilValue get()
     {
         return instance;
     }
@@ -48,13 +47,7 @@ public class ImmutableNilValueImpl
     }
 
     @Override
-    public ImmutableNilValue immutableValue()
-    {
-        return this;
-    }
-
-    @Override
-    public ImmutableNilValue asNilValue()
+    public NilValue asNilValue()
     {
         return this;
     }
