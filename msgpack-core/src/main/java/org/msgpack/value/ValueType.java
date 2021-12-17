@@ -21,8 +21,6 @@ package org.msgpack.value;
  * MessagePack uses hierarchical type system. Integer and Float are subypte of Number, Thus {@link #isNumberType()}
  * returns true if type is Integer or Float. String and Binary are subtype of Raw. Thus {@link #isRawType()} returns
  * true if type is String or Binary.
- *
- * @see org.msgpack.core.MessageFormat
  */
 public enum ValueType
 {

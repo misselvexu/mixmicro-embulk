@@ -15,7 +15,6 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageStringCodingException;
 import org.msgpack.value.ImmutableRawValue;
 
@@ -23,6 +22,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public abstract class AbstractImmutableRawValue
@@ -41,7 +41,7 @@ public abstract class AbstractImmutableRawValue
     public AbstractImmutableRawValue(String string)
     {
         this.decodedStringCache = string;
-        this.data = string.getBytes(MessagePack.UTF8);  // TODO
+        this.data = string.getBytes(StandardCharsets.UTF_8);
     }
 
     @Override
@@ -91,14 +91,14 @@ public abstract class AbstractImmutableRawValue
                 return;
             }
             try {
-                CharsetDecoder reportDecoder = MessagePack.UTF8.newDecoder()
+                CharsetDecoder reportDecoder = StandardCharsets.UTF_8.newDecoder()
                         .onMalformedInput(CodingErrorAction.REPORT)
                         .onUnmappableCharacter(CodingErrorAction.REPORT);
                 this.decodedStringCache = reportDecoder.decode(asByteBuffer()).toString();
             }
             catch (CharacterCodingException ex) {
                 try {
-                    CharsetDecoder replaceDecoder = MessagePack.UTF8.newDecoder()
+                    CharsetDecoder replaceDecoder = StandardCharsets.UTF_8.newDecoder()
                             .onMalformedInput(CodingErrorAction.REPLACE)
                             .onUnmappableCharacter(CodingErrorAction.REPLACE);
                     this.decodedStringCache = replaceDecoder.decode(asByteBuffer()).toString();

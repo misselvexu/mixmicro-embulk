@@ -15,7 +15,6 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableBinaryValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
@@ -54,14 +53,6 @@ public class ImmutableBinaryValueImpl
     public ImmutableBinaryValue asBinaryValue()
     {
         return this;
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packBinaryHeader(data.length);
-        pk.writePayload(data);
     }
 
     @Override

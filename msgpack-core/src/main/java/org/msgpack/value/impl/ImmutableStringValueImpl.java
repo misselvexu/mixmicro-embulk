@@ -15,7 +15,6 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableStringValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
@@ -59,14 +58,6 @@ public class ImmutableStringValueImpl
     public ImmutableStringValue asStringValue()
     {
         return this;
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packRawStringHeader(data.length);
-        pk.writePayload(data);
     }
 
     @Override

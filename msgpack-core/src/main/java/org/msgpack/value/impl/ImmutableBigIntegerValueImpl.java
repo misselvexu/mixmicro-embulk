@@ -15,16 +15,13 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessageFormat;
 import org.msgpack.core.MessageIntegerOverflowException;
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableIntegerValue;
 import org.msgpack.value.ImmutableNumberValue;
 import org.msgpack.value.IntegerValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
 import java.math.BigInteger;
 
 /**
@@ -36,25 +33,6 @@ public class ImmutableBigIntegerValueImpl
         extends AbstractImmutableValue
         implements ImmutableIntegerValue
 {
-    public static MessageFormat mostSuccinctMessageFormat(IntegerValue v)
-    {
-        if (v.isInByteRange()) {
-            return MessageFormat.INT8;
-        }
-        else if (v.isInShortRange()) {
-            return MessageFormat.INT16;
-        }
-        else if (v.isInIntRange()) {
-            return MessageFormat.INT32;
-        }
-        else if (v.isInLongRange()) {
-            return MessageFormat.INT64;
-        }
-        else {
-            return MessageFormat.UINT64;
-        }
-    }
-
     private final BigInteger value;
 
     public ImmutableBigIntegerValueImpl(BigInteger value)
@@ -162,12 +140,6 @@ public class ImmutableBigIntegerValueImpl
     }
 
     @Override
-    public MessageFormat mostSuccinctMessageFormat()
-    {
-        return mostSuccinctMessageFormat(this);
-    }
-
-    @Override
     public byte asByte()
     {
         if (!isInByteRange()) {
@@ -207,13 +179,6 @@ public class ImmutableBigIntegerValueImpl
     public BigInteger asBigInteger()
     {
         return value;
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packBigInteger(value);
     }
 
     @Override

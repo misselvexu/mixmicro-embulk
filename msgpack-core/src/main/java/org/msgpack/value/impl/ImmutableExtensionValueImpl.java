@@ -15,7 +15,6 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ExtensionValue;
 import org.msgpack.value.ImmutableExtensionValue;
 import org.msgpack.value.Value;
@@ -70,14 +69,6 @@ public class ImmutableExtensionValueImpl
     public byte[] getData()
     {
         return data;
-    }
-
-    @Override
-    public void writeTo(MessagePacker packer)
-            throws IOException
-    {
-        packer.packExtensionTypeHeader(type, data.length);
-        packer.writePayload(data);
     }
 
     @Override

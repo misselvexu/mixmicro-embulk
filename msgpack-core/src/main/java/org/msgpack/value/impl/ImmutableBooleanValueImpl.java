@@ -15,12 +15,9 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableBooleanValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
-
-import java.io.IOException;
 
 /**
  * {@code ImmutableBooleanValueImpl} Implements {@code ImmutableBooleanValue} using a {@code boolean} field.
@@ -65,13 +62,6 @@ public class ImmutableBooleanValueImpl
     public boolean getBoolean()
     {
         return value;
-    }
-
-    @Override
-    public void writeTo(MessagePacker packer)
-            throws IOException
-    {
-        packer.packBoolean(value);
     }
 
     @Override

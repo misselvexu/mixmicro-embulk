@@ -15,10 +15,6 @@
 //
 package org.msgpack.value;
 
-import org.msgpack.core.MessagePacker;
-
-import java.io.IOException;
-
 /**
  * Value stores a value and its type in MessagePack type system.
  *
@@ -279,14 +275,6 @@ public interface Value
      * @throws MessageTypeCastException If type of this value is not an Extension.
      */
     ExtensionValue asExtensionValue();
-
-    /**
-     * Serializes the value using the specified {@code MessagePacker}
-     *
-     * @see MessagePacker
-     */
-    void writeTo(MessagePacker pk)
-            throws IOException;
 
     /**
      * Compares this value to the specified object.

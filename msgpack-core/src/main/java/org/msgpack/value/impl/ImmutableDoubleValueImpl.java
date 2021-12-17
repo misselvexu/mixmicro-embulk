@@ -15,13 +15,11 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableNumberValue;
 import org.msgpack.value.ImmutableFloatValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -105,13 +103,6 @@ public class ImmutableDoubleValueImpl
     public double toDouble()
     {
         return value;
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packDouble(value);
     }
 
     @Override

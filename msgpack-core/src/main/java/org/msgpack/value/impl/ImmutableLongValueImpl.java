@@ -15,16 +15,13 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessageFormat;
 import org.msgpack.core.MessageIntegerOverflowException;
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableIntegerValue;
 import org.msgpack.value.ImmutableNumberValue;
 import org.msgpack.value.IntegerValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
 import java.math.BigInteger;
 
 /**
@@ -141,12 +138,6 @@ public class ImmutableLongValueImpl
     }
 
     @Override
-    public MessageFormat mostSuccinctMessageFormat()
-    {
-        return ImmutableBigIntegerValueImpl.mostSuccinctMessageFormat(this);
-    }
-
-    @Override
     public byte asByte()
     {
         if (!isInByteRange()) {
@@ -183,13 +174,6 @@ public class ImmutableLongValueImpl
     public BigInteger asBigInteger()
     {
         return BigInteger.valueOf((long) value);
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packLong(value);
     }
 
     @Override

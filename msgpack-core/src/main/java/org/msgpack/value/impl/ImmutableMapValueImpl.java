@@ -15,13 +15,11 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ImmutableMapValue;
 import org.msgpack.value.MapValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
@@ -107,16 +105,6 @@ public class ImmutableMapValueImpl
     public Map<Value, Value> map()
     {
         return new ImmutableMapValueMap(kvs);
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packMapHeader(kvs.length / 2);
-        for (int i = 0; i < kvs.length; i++) {
-            kvs[i].writeTo(pk);
-        }
     }
 
     @Override

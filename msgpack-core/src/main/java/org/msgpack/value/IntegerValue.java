@@ -15,8 +15,6 @@
 //
 package org.msgpack.value;
 
-import org.msgpack.core.MessageFormat;
-
 import java.math.BigInteger;
 
 /**
@@ -46,13 +44,6 @@ public interface IntegerValue
      * Returns true if the value is in the range of [-2<sup>63</sup> to 2<sup>63</sup>-1]
      */
     boolean isInLongRange();
-
-    /**
-     * Returns the most succinct MessageFormat type to represent this integer value.
-     *
-     * @return the smallest integer type of MessageFormat that is big enough to store the value.
-     */
-    MessageFormat mostSuccinctMessageFormat();
 
     /**
      * Returns the value as a {@code byte}, otherwise throws an exception.

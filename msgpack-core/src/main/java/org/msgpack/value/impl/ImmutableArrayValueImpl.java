@@ -15,13 +15,11 @@
 //
 package org.msgpack.value.impl;
 
-import org.msgpack.core.MessagePacker;
 import org.msgpack.value.ArrayValue;
 import org.msgpack.value.ImmutableArrayValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -100,16 +98,6 @@ public class ImmutableArrayValueImpl
     public List<Value> list()
     {
         return new ImmutableArrayValueList(array);
-    }
-
-    @Override
-    public void writeTo(MessagePacker pk)
-            throws IOException
-    {
-        pk.packArrayHeader(array.length);
-        for (int i = 0; i < array.length; i++) {
-            array[i].writeTo(pk);
-        }
     }
 
     @Override
