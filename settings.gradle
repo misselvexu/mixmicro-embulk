@@ -1,5 +1,6 @@
 rootProject.name = 'embulk'
 
+include 'msgpack-core'
 include 'embulk-api'
 include 'embulk-spi'
 include 'embulk-core'
