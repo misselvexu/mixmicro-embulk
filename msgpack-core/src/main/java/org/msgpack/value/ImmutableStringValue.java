@@ -17,11 +17,8 @@ package org.msgpack.value;
 
 /**
  * Immutable representation of MessagePack's String type.
- *
- * @see org.msgpack.value.StringValue
- * @see org.msgpack.value.ImmutableRawValue
  */
 public interface ImmutableStringValue
-        extends StringValue, ImmutableRawValue
+        extends StringValue, ImmutableValue
 {
 }

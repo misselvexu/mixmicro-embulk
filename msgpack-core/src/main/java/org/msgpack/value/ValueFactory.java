@@ -17,7 +17,6 @@ package org.msgpack.value;
 
 import org.msgpack.value.impl.ImmutableArrayValueImpl;
 import org.msgpack.value.impl.ImmutableBigIntegerValueImpl;
-import org.msgpack.value.impl.ImmutableBinaryValueImpl;
 import org.msgpack.value.impl.ImmutableBooleanValueImpl;
 import org.msgpack.value.impl.ImmutableDoubleValueImpl;
 import org.msgpack.value.impl.ImmutableLongValueImpl;
@@ -83,69 +82,9 @@ public final class ValueFactory
         return new ImmutableDoubleValueImpl(v);
     }
 
-    public static ImmutableBinaryValue newBinary(byte[] b)
-    {
-        return newBinary(b, false);
-    }
-
-    public static ImmutableBinaryValue newBinary(byte[] b, boolean omitCopy)
-    {
-        if (omitCopy) {
-            return new ImmutableBinaryValueImpl(b);
-        }
-        else {
-            return new ImmutableBinaryValueImpl(Arrays.copyOf(b, b.length));
-        }
-    }
-
-    public static ImmutableBinaryValue newBinary(byte[] b, int off, int len)
-    {
-        return newBinary(b, off, len, false);
-    }
-
-    public static ImmutableBinaryValue newBinary(byte[] b, int off, int len, boolean omitCopy)
-    {
-        if (omitCopy && off == 0 && len == b.length) {
-            return new ImmutableBinaryValueImpl(b);
-        }
-        else {
-            return new ImmutableBinaryValueImpl(Arrays.copyOfRange(b, off, len));
-        }
-    }
-
     public static ImmutableStringValue newString(String s)
     {
         return new ImmutableStringValueImpl(s);
-    }
-
-    public static ImmutableStringValue newString(byte[] b)
-    {
-        return new ImmutableStringValueImpl(b);
-    }
-
-    public static ImmutableStringValue newString(byte[] b, boolean omitCopy)
-    {
-        if (omitCopy) {
-            return new ImmutableStringValueImpl(b);
-        }
-        else {
-            return new ImmutableStringValueImpl(Arrays.copyOf(b, b.length));
-        }
-    }
-
-    public static ImmutableStringValue newString(byte[] b, int off, int len)
-    {
-        return newString(b, off, len, false);
-    }
-
-    public static ImmutableStringValue newString(byte[] b, int off, int len, boolean omitCopy)
-    {
-        if (omitCopy && off == 0 && len == b.length) {
-            return new ImmutableStringValueImpl(b);
-        }
-        else {
-            return new ImmutableStringValueImpl(Arrays.copyOfRange(b, off, len));
-        }
     }
 
     public static ImmutableArrayValue newArray(List<? extends Value> list)

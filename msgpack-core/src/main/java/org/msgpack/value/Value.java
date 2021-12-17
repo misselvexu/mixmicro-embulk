@@ -31,9 +31,7 @@ package org.msgpack.value;
  *   <tr><td>Integer or Float</td><td>{@link #isNumberValue()}</td><td>{@link #asNumberValue()}</td><td>{@link NumberValue}</td></tr>
  *   <tr><td>Integer</td><td>{@link #isIntegerValue()}</td><td>{@link #asIntegerValue()}</td><td>{@link IntegerValue}</td></tr>
  *   <tr><td>Float</td><td>{@link #isFloatValue()}</td><td>{@link #asFloatValue()}</td><td>{@link FloatValue}</td></tr>
- *   <tr><td>String or Binary</td><td>{@link #isRawValue()}</td><td>{@link #asRawValue()}</td><td>{@link RawValue}</td></tr>
  *   <tr><td>String</td><td>{@link #isStringValue()}</td><td>{@link #asStringValue()}</td><td>{@link StringValue}</td></tr>
- *   <tr><td>Binary</td><td>{@link #isBinaryValue()}</td><td>{@link #asBinaryValue()}</td><td>{@link BinaryValue}</td></tr>
  *   <tr><td>Array</td><td>{@link #isArrayValue()}</td><td>{@link #asArrayValue()}</td><td>{@link ArrayValue}</td></tr>
  *   <tr><td>Map</td><td>{@link #isMapValue()}</td><td>{@link #asMapValue()}</td><td>{@link MapValue}</td></tr>
 tr>
@@ -55,9 +53,7 @@ tr>
  *   <tr><td>Integer</td><td>{@link IntegerValue}.{@link IntegerValue#immutableValue()}</td><td>{@link ImmutableIntegerValue}</td></tr>
  *   <tr><td>Float</td><td>{@link FloatValue}.{@link FloatValue#immutableValue()}</td><td>{@link ImmutableFloatValue}</td></tr>
  *   <tr><td>Integer or Float</td><td>{@link NumberValue}.{@link NumberValue#immutableValue()}</td><td>{@link ImmutableNumberValue}</td></tr>
- *   <tr><td>String or Binary</td><td>{@link RawValue}.{@link RawValue#immutableValue()}</td><td>{@link ImmutableRawValue}</td></tr>
  *   <tr><td>String</td><td>{@link StringValue}.{@link StringValue#immutableValue()}</td><td>{@link ImmutableStringValue}</td></tr>
- *   <tr><td>Binary</td><td>{@link BinaryValue}.{@link BinaryValue#immutableValue()}</td><td>{@link ImmutableBinaryValue}</td></tr>
  *   <tr><td>Array</td><td>{@link ArrayValue}.{@link ArrayValue#immutableValue()}</td><td>{@link ImmutableArrayValue}</td></tr>
  *   <tr><td>Map</td><td>{@link MapValue}.{@link MapValue#immutableValue()}</td><td>{@link ImmutableMapValue}</td></tr>
  * </table>
@@ -124,22 +120,6 @@ public interface Value
      * Note that you can't use <code>instanceof</code> or cast <code>((FloatValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
      */
     boolean isFloatValue();
-
-    /**
-     * Returns true if type of this value is String or Binary.
-     *
-     * If this method returns true, {@code asRawValue} never throws exceptions.
-     * Note that you can't use <code>instanceof</code> or cast <code>((RawValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
-     */
-    boolean isRawValue();
-
-    /**
-     * Returns true if type of this value is Binary.
-     *
-     * If this method returns true, {@code asBinaryValue} never throws exceptions.
-     * Note that you can't use <code>instanceof</code> or cast <code>((BinaryValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
-     */
-    boolean isBinaryValue();
 
     /**
      * Returns true if type of this value is String.
@@ -211,24 +191,6 @@ public interface Value
     FloatValue asFloatValue();
 
     /**
-     * Returns the value as {@code RawValue}. Otherwise throws {@code MessageTypeCastException}.
-     *
-     * Note that you can't use <code>instanceof</code> or cast <code>((RawValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
-     *
-     * @throws MessageTypeCastException If type of this value is not Binary or String.
-     */
-    RawValue asRawValue();
-
-    /**
-     * Returns the value as {@code BinaryValue}. Otherwise throws {@code MessageTypeCastException}.
-     *
-     * Note that you can't use <code>instanceof</code> or cast <code>((BinaryValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
-     *
-     * @throws MessageTypeCastException If type of this value is not Binary.
-     */
-    BinaryValue asBinaryValue();
-
-    /**
      * Returns the value as {@code StringValue}. Otherwise throws {@code MessageTypeCastException}.
      *
      * Note that you can't use <code>instanceof</code> or cast <code>((StringValue) thisValue)</code> to check type of a value because type of a mutable value is variable.
@@ -271,8 +233,6 @@ public interface Value
      * <ul>
      * <li>if a key of MapValue is not string, the key is converted to a string using toString method.</li>
      * <li>NaN and Infinity of DoubleValue are converted to null.</li>
-     * <li>BinaryValue is converted to a string using UTF-8 encoding. Invalid byte sequence is replaced with <code>U+FFFD replacement character</code>.</li>
-     * <li>Invalid UTF-8 byte sequences in StringValue is replaced with <code>U+FFFD replacement character</code></li>
      * <ul>
      */
     String toJson();

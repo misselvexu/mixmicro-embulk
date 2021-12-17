@@ -19,28 +19,24 @@ package org.msgpack.value;
  * Representation of MessagePack types.
  * <p>
  * MessagePack uses hierarchical type system. Integer and Float are subypte of Number, Thus {@link #isNumberType()}
- * returns true if type is Integer or Float. String and Binary are subtype of Raw. Thus {@link #isRawType()} returns
- * true if type is String or Binary.
+ * returns true if type is Integer or Float.
  */
 public enum ValueType
 {
-    NIL(false, false),
-    BOOLEAN(false, false),
-    INTEGER(true, false),
-    FLOAT(true, false),
-    STRING(false, true),
-    BINARY(false, true),
-    ARRAY(false, false),
-    MAP(false, false),
+    NIL(false),
+    BOOLEAN(false),
+    INTEGER(true),
+    FLOAT(true),
+    STRING(false),
+    ARRAY(false),
+    MAP(false),
     ;
 
     private final boolean numberType;
-    private final boolean rawType;
 
-    private ValueType(boolean numberType, boolean rawType)
+    private ValueType(boolean numberType)
     {
         this.numberType = numberType;
-        this.rawType = rawType;
     }
 
     public boolean isNilType()
@@ -68,19 +64,9 @@ public enum ValueType
         return this == FLOAT;
     }
 
-    public boolean isRawType()
-    {
-        return rawType;
-    }
-
     public boolean isStringType()
     {
         return this == STRING;
-    }
-
-    public boolean isBinaryType()
-    {
-        return this == BINARY;
     }
 
     public boolean isArrayType()

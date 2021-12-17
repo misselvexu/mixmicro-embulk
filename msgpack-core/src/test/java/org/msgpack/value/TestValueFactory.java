@@ -26,50 +26,44 @@ import org.junit.Test;
 public class TestValueFactory {
     @Test
     public void testNil() {
-        assertValid(ValueType.NIL, true, false, false, false, false, false, false, false, false, false, ValueFactory.newNil());
+        assertValid(ValueType.NIL, true, false, false, false, false, false, false, false, ValueFactory.newNil());
     }
 
     @Test
     public void testBoolean() {
-        assertValid(ValueType.BOOLEAN, false, true, false, false, false, false, false, false, false, false, ValueFactory.newBoolean(true));
-        assertValid(ValueType.BOOLEAN, false, true, false, false, false, false, false, false, false, false, ValueFactory.newBoolean(false));
+        assertValid(ValueType.BOOLEAN, false, true, false, false, false, false, false, false, ValueFactory.newBoolean(true));
+        assertValid(ValueType.BOOLEAN, false, true, false, false, false, false, false, false, ValueFactory.newBoolean(false));
     }
 
     @Test
     public void testInteger() {
-        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, false, false, true, ValueFactory.newInteger(1234));
-        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, false, false, true, ValueFactory.newInteger(0));
-        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, false, false, true, ValueFactory.newInteger(-2184901));
+        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, true, ValueFactory.newInteger(1234));
+        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, true, ValueFactory.newInteger(0));
+        assertValid(ValueType.INTEGER, false, false, true, false, false, false, false, true, ValueFactory.newInteger(-2184901));
     }
 
     @Test
     public void testFloat() {
-        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, false, false, true, ValueFactory.newFloat(1234.124));
-        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, false, false, true, ValueFactory.newFloat(0.0));
-        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, false, false, true, ValueFactory.newFloat(-0.0));
-        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, false, false, true, ValueFactory.newFloat(1.23e-10));
+        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, true, ValueFactory.newFloat(1234.124));
+        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, true, ValueFactory.newFloat(0.0));
+        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, true, ValueFactory.newFloat(-0.0));
+        assertValid(ValueType.FLOAT, false, false, false, false, true, false, false, true, ValueFactory.newFloat(1.23e-10));
     }
 
     @Test
     public void testString() {
-        assertValid(ValueType.STRING, false, false, false, true, false, false, false, false, true, false, ValueFactory.newString("hoge"));
-        assertValid(ValueType.STRING, false, false, false, true, false, false, false, false, true, false, ValueFactory.newString(""));
-    }
-
-    @Test
-    public void testBinary() {
-        assertValid(ValueType.BINARY, false, false, false, false, false, true, false, false, true, false, ValueFactory.newBinary("hoge".getBytes(StandardCharsets.UTF_8)));
-        assertValid(ValueType.BINARY, false, false, false, false, false, true, false, false, true, false, ValueFactory.newBinary(new byte[0]));
+        assertValid(ValueType.STRING, false, false, false, true, false, false, false, false, ValueFactory.newString("hoge"));
+        assertValid(ValueType.STRING, false, false, false, true, false, false, false, false, ValueFactory.newString(""));
     }
 
     @Test
     public void testArray() {
-        assertValid(ValueType.ARRAY, false, false, false, false, false, false, true, false, false, false, ValueFactory.emptyArray());
+        assertValid(ValueType.ARRAY, false, false, false, false, false, true, false, false, ValueFactory.emptyArray());
     }
 
     @Test
     public void testMap() {
-        assertValid(ValueType.MAP, false, false, false, false, false, false, false, true, false, false, ValueFactory.emptyMap());
+        assertValid(ValueType.MAP, false, false, false, false, false, false, true, false, ValueFactory.emptyMap());
     }
 
     private static void assertValid(
@@ -79,10 +73,8 @@ public class TestValueFactory {
             final boolean isInteger,
             final boolean isString,
             final boolean isFloat,
-            final boolean isBinary,
             final boolean isArray,
             final boolean isMap,
-            final boolean isRaw,
             final boolean isNumber,
             final Value v) {
         assertEquals(isNil, v.isNilValue());
@@ -90,10 +82,8 @@ public class TestValueFactory {
         assertEquals(isInteger, v.isIntegerValue());
         assertEquals(isFloat, v.isFloatValue());
         assertEquals(isString, v.isStringValue());
-        assertEquals(isBinary, v.isBinaryValue());
         assertEquals(isArray, v.isArrayValue());
         assertEquals(isMap, v.isMapValue());
-        assertEquals(isRaw, v.isRawValue());
         assertEquals(isNumber, v.isNumberValue());
     }
 }

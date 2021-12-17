@@ -17,14 +17,12 @@ package org.msgpack.value.impl;
 
 import org.msgpack.core.MessageTypeCastException;
 import org.msgpack.value.ImmutableArrayValue;
-import org.msgpack.value.ImmutableBinaryValue;
 import org.msgpack.value.ImmutableBooleanValue;
 import org.msgpack.value.ImmutableFloatValue;
 import org.msgpack.value.ImmutableIntegerValue;
 import org.msgpack.value.ImmutableMapValue;
 import org.msgpack.value.ImmutableNilValue;
 import org.msgpack.value.ImmutableNumberValue;
-import org.msgpack.value.ImmutableRawValue;
 import org.msgpack.value.ImmutableStringValue;
 import org.msgpack.value.ImmutableValue;
 
@@ -59,18 +57,6 @@ abstract class AbstractImmutableValue
     public boolean isFloatValue()
     {
         return getValueType().isFloatType();
-    }
-
-    @Override
-    public boolean isRawValue()
-    {
-        return getValueType().isRawType();
-    }
-
-    @Override
-    public boolean isBinaryValue()
-    {
-        return getValueType().isBinaryType();
     }
 
     @Override
@@ -117,18 +103,6 @@ abstract class AbstractImmutableValue
 
     @Override
     public ImmutableFloatValue asFloatValue()
-    {
-        throw new MessageTypeCastException();
-    }
-
-    @Override
-    public ImmutableRawValue asRawValue()
-    {
-        throw new MessageTypeCastException();
-    }
-
-    @Override
-    public ImmutableBinaryValue asBinaryValue()
     {
         throw new MessageTypeCastException();
     }

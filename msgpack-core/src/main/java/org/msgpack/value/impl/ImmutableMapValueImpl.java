@@ -158,7 +158,7 @@ public class ImmutableMapValueImpl
 
     private static void appendJsonKey(StringBuilder sb, Value key)
     {
-        if (key.isRawValue()) {
+        if (key.isStringValue()) {
             sb.append(key.toJson());
         }
         else {
@@ -189,7 +189,7 @@ public class ImmutableMapValueImpl
 
     private static void appendString(StringBuilder sb, Value value)
     {
-        if (value.isRawValue()) {
+        if (value.isStringValue()) {
             sb.append(value.toJson());
         }
         else {

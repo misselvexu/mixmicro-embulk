@@ -19,27 +19,22 @@ import org.msgpack.value.ImmutableStringValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueType;
 
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.Objects;
 
 /**
- * {@code ImmutableStringValueImpl} Implements {@code ImmutableStringValue} using a {@code byte[]} field.
- * This implementation caches result of {@code toString()} and {@code asString()} using a private {@code String} field.
+ * {@code ImmutableStringValueImpl} Implements {@code ImmutableStringValue} using a {@code String} field.
  *
  * @see org.msgpack.value.StringValue
  */
 public class ImmutableStringValueImpl
-        extends AbstractImmutableRawValue
+        extends AbstractImmutableValue
         implements ImmutableStringValue
 {
-    public ImmutableStringValueImpl(byte[] data)
-    {
-        super(data);
-    }
+    private final String string;
 
     public ImmutableStringValueImpl(String string)
     {
-        super(string);
+        this.string = string;
     }
 
     @Override
@@ -61,6 +56,12 @@ public class ImmutableStringValueImpl
     }
 
     @Override
+    public String asString()
+    {
+        return string;
+    }
+
+    @Override
     public boolean equals(Object o)
     {
         if (this == o) {
@@ -76,16 +77,93 @@ public class ImmutableStringValueImpl
 
         if (v instanceof ImmutableStringValueImpl) {
             ImmutableStringValueImpl bv = (ImmutableStringValueImpl) v;
-            return Arrays.equals(data, bv.data);
+            return Objects.equals(string, bv.string);
         }
         else {
-            return Arrays.equals(data, v.asStringValue().asByteArray());
+            return Objects.equals(string, v.asStringValue().asString());
         }
     }
 
     @Override
     public int hashCode()
     {
-        return Arrays.hashCode(data);
+        return Objects.hashCode(string);
+    }
+
+    @Override
+    public String toJson()
+    {
+        StringBuilder sb = new StringBuilder();
+        appendJsonString(sb, toString());
+        return sb.toString();
+    }
+
+    @Override
+    public String toString()
+    {
+        return string;
+    }
+
+    static void appendJsonString(StringBuilder sb, String string)
+    {
+        sb.append("\"");
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
+            if (ch < 0x20) {
+                switch (ch) {
+                    case '\n':
+                        sb.append("\\n");
+                        break;
+                    case '\r':
+                        sb.append("\\r");
+                        break;
+                    case '\t':
+                        sb.append("\\t");
+                        break;
+                    case '\f':
+                        sb.append("\\f");
+                        break;
+                    case '\b':
+                        sb.append("\\b");
+                        break;
+                    default:
+                        // control chars
+                        escapeChar(sb, ch);
+                        break;
+                }
+            }
+            else if (ch <= 0x7f) {
+                switch (ch) {
+                    case '\\':
+                        sb.append("\\\\");
+                        break;
+                    case '"':
+                        sb.append("\\\"");
+                        break;
+                    default:
+                        sb.append(ch);
+                        break;
+                }
+            }
+            else if (ch >= 0xd800 && ch <= 0xdfff) {
+                // surrogates
+                escapeChar(sb, ch);
+            }
+            else {
+                sb.append(ch);
+            }
+        }
+        sb.append("\"");
+    }
+
+    private static final char[] HEX_TABLE = "0123456789ABCDEF".toCharArray();
+
+    private static void escapeChar(StringBuilder sb, int ch)
+    {
+        sb.append("\\u");
+        sb.append(HEX_TABLE[(ch >> 12) & 0x0f]);
+        sb.append(HEX_TABLE[(ch >> 8) & 0x0f]);
+        sb.append(HEX_TABLE[(ch >> 4) & 0x0f]);
+        sb.append(HEX_TABLE[ch & 0x0f]);
     }
 }

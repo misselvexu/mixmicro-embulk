@@ -182,7 +182,7 @@ public class ImmutableArrayValueImpl
 
     private static void appendString(StringBuilder sb, Value value)
     {
-        if (value.isRawValue()) {
+        if (value.isStringValue()) {
             sb.append(value.toJson());
         }
         else {

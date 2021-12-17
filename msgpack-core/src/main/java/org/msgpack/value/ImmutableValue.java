@@ -40,11 +40,5 @@ public interface ImmutableValue
     public ImmutableMapValue asMapValue();
 
     @Override
-    public ImmutableRawValue asRawValue();
-
-    @Override
-    public ImmutableBinaryValue asBinaryValue();
-
-    @Override
     public ImmutableStringValue asStringValue();
 }
